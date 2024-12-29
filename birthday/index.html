@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Wishes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 150%;
+      height: 150%;
+      background: url("C:/Users/srini/OneDrive/Desktop/birthday/IMG_20230413_103313_0727.jpg") no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(10px);
+      z-index: -1;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    }
+    .text-container {
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-align: center;
+      animation: textIn 2s ease, textOut 2s 6s ease forwards;
+    }
+
+    .book {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      perspective: 1500px;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      transform-origin: left;
+      transition: transform 1s ease-in-out;
+      backface-visibility: hidden;
+    }
+
+    .page img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+      text-align: center;
+      animation: fadeIn 2s ease-in-out, float 3s ease-in-out infinite;
+    }
+
+    .quote-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: black;
+      font-size: 1.5rem;
+      text-align: center;
+      font-style: italic;
+      border-right: 2px solid black;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 4s steps(40, end), blink 0.8s step-end infinite;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(-50%, -50%) translateY(0);
+      }
+      50% {
+        transform: translate(-50%, -50%) translateY(-10px);
+      }
+    }
+
+    .instructions {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="content">
+    <div class="book">
+      <div class="page" style="z-index: 6; transform: rotateY(0deg);">
+        <img src="C:\Users\srini\OneDrive\Desktop\birthday\Screenshot 2024-11-05 204828.png" alt="Slide 1">
+        <div class="text-overlay">Happy Birthday, My Love!</div>
+      </div>
+      <div class="page" style="z-index: 5; transform: rotateY(180deg);">
+        <img src="C:\Users\srini\OneDrive\Desktop\birthday\Screenshot 2024-11-05 204855.png" alt="Slide 2">
+        <div class="text-overlay">You make every day brighter!</div>
+      </div>
+      <div class="page" style="z-index: 4; transform: rotateY(180deg);">
+        <img src="C:\Users\srini\OneDrive\Desktop\birthday\Screenshot 2024-11-05 205541.png" alt="Slide 3">
+        <div class="text-overlay">Thank you for being my everything.</div>
+      </div>
+      <div class="page" style="z-index: 3; transform: rotateY(180deg);">
+        <img src="C:\Users\srini\OneDrive\Desktop\birthday\Screenshot 2024-11-05 214422.png" alt="Slide 4">
+        <div class="text-overlay">Here’s to a year of love and happiness!</div>
+      </div>
+      <div class="page" style="z-index: 2; transform: rotateY(180deg);">
+        <img src="C:\Users\srini\OneDrive\Desktop\birthday\Screenshot 2024-11-05 214745.png" alt="Slide 5">
+        <div class="text-overlay">I love you more than words can say.</div>
+      </div>
+      <div class="page" style="z-index: 1; transform: rotateY(0deg); background: #f0e4d7;">
+        <div class="quote-overlay">"Life is a journey, not a race. Cherish every moment."</div>
+      </div>
+    </div>
+
+    <p class="instructions">Swipe or drag left/right to navigate the slides.</p>
+  </div>
+
+  <audio id="flipSound" src="https://www.soundjay.com/button/sounds/beep-07.mp3" preload="auto"></audio>
+  <script>
+    const pages = document.querySelectorAll('.page');
+    const flipSound = document.getElementById('flipSound');
+    let currentIndex = 0;
+
+    let startX = 0;
+    let isDragging = false;
+
+    function playSound() {
+      flipSound.currentTime = 0;
+      flipSound.play().catch((err) => console.error('Audio error:', err));
+    }
+
+    function nextPage() {
+      if (currentIndex < pages.length - 1) {
+        pages[currentIndex].style.transform = 'rotateY(-180deg)';
+        currentIndex++;
+        playSound();
+      }
+    }
+
+    function prevPage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        pages[currentIndex].style.transform = 'rotateY(0deg)';
+        playSound();
+      }
+    }
+
+    function handleSwipe(endX) {
+      const distance = endX - startX;
+
+      if (distance > 50) prevPage();
+      else if (distance < -50) nextPage();
+    }
+
+    document.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+    document.addEventListener('touchend', (e) => handleSwipe(e.changedTouches[0].clientX));
+    document.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+    });
+    document.addEventListener('mouseup', (e) => {
+      if (isDragging) handleSwipe(e.clientX);
+      isDragging = false;
+    });
+    document.addEventListener('mouseleave', () => isDragging = false);
+  </script>
+</body>
+</html>
